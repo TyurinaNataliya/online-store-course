@@ -4,14 +4,10 @@ import star from '../assert/star.png'
 import { useNavigate } from 'react-router-dom';
 
 import { DEVICE_ROUTE } from "../utils/constr";
+import { TypeDevice } from "../types/types";
 
 type Props = {
-    device: {
-        id: number;
-        img: string;
-        rating: number;
-        name: string
-    };
+    device: TypeDevice
 }
 
 const DeviceItem: FC<Props> = ({ device }) => {
@@ -27,9 +23,9 @@ const DeviceItem: FC<Props> = ({ device }) => {
                 <div className="text-black-50 
             mt-1 d-flex justify-content-between alidn-items-center">
                     <div>Samsung..</div>
-                    <div className="d-flex alidn-items-center">
+                    <div className="d-flex alidn-items-center" style={{ alignItems: "center" }}>
                         <div>{device.rating}</div>
-                        <Image style={{ width: 23, height: 23 }} src={star} />
+                        <Image style={{ width: 18, height: 18 }} src={star} />
                     </div>
                 </div>
                 <div>{device.name}</div>
