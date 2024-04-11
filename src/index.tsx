@@ -12,6 +12,7 @@ interface AppContextData {
 
 export const Context = createContext<AppContextData>({ device: {}, user: {} })
 
+
 ReactDOM.render(
     <Context.Provider value={{
         user: new UserStore(),

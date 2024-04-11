@@ -5,16 +5,17 @@ export type TypeDevice={
     rating:number,
     img:string,
     typeId?:number,
-    brandId?:number
+    brandId?:number,
+    info?:[TypeInfo]
 }
 
 export type Type={
-    id:number,
+    id?:number,
     name:string
 }
 
 export type Brand={
-    id:number,
+    id?:number,
     name:string
 }
 
@@ -37,8 +38,15 @@ export type TypeBasketDevice={
 }
 
 export type TypeDeviceInfo={
-    id:number,
-    device_id:number,
+    id?:number,
+    device_id?:number,
     title:string,
-    description:string
+    description:string,
+    number:number
+}
+
+export type TypeInfo={
+    id:number,
+    title:string,
+    description:string,
 }

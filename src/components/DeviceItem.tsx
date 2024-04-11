@@ -3,7 +3,7 @@ import { Image, Card, Col } from 'react-bootstrap'
 import star from '../assert/star.png'
 import { useNavigate } from 'react-router-dom';
 
-import { DEVICE_ROUTE } from "../utils/constr";
+import { DEVICE_ROUTE, REACT_APP_API_URL } from "../utils/constr";
 import { TypeDevice } from "../types/types";
 
 type Props = {
@@ -19,7 +19,7 @@ const DeviceItem: FC<Props> = ({ device }) => {
             navigate(`${DEVICE_ROUTE}/${device.id}`)
         }}>
             <Card style={{ width: 150, cursor: 'pointer' }} border="light">
-                <Image width={150} height={150} src={device.img} />
+                <Image width={150} height={150} src={REACT_APP_API_URL + device.img} />
                 <div className="text-black-50 
             mt-1 d-flex justify-content-between alidn-items-center">
                     <div>Samsung..</div>
