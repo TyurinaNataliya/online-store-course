@@ -17,13 +17,10 @@ const Auth: FC = observer(() => {
 
     const click = async () => {
         try {
-
             let data
             if (isLogin) {
                 data = await login(email, password);
-
             } else {
-
                 data = await registration(email, password)
 
             }

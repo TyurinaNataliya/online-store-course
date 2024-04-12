@@ -9,14 +9,14 @@ import { Spinner } from 'react-bootstrap';
 
 const App: FC = observer(() => {
   const { user } = useContext(Context)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
-  // useEffect(() => {
-  //   check().then(data => {
-  //     user.setUser(true)
-  //     user.setIsAuth(true)
-  //   }).finally(() => setLoading(false))
-  // }, [user])
+  useEffect(() => {
+    check().then(data => {
+      user.setUser(true)
+      user.setIsAuth(true)
+    }).finally(() => setLoading(false))
+  }, [user])
   if (loading) {
     return <Spinner animation='grow' />
   }
