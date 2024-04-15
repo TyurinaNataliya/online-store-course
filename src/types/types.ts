@@ -1,8 +1,8 @@
 export type TypeDevice={
-    id:number,
+    id?:number,
     name:string,
     price:number,
-    rating:number,
+    rating?:number,
     img:string,
     typeId?:number,
     brandId?:number,

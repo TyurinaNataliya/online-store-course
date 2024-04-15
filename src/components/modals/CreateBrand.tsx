@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { createBrand } from '../../http/deviceApi';
 
 type Props = {
     show: boolean,
@@ -7,6 +8,12 @@ type Props = {
 }
 
 const CreateBrand: FC<Props> = ({ show, onHide }) => {
+    const [value, setValue] = useState<string>('')
+    const addBrand = () => {
+        createBrand({ name: value }).then(data => setValue(''))
+        onHide()
+    }
+
     return (
         <Modal
             show={show}
@@ -21,12 +28,15 @@ const CreateBrand: FC<Props> = ({ show, onHide }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Control placeholder='Введите название бренда' />
+                    <Form.Control
+                        value={value}
+                        onChange={(event) => setValue(event.target.value)}
+                        placeholder='Введите название бренда' />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant='outline-danger' onClick={onHide}>Закрыть</Button>
-                <Button variant='outline-success' onClick={onHide}>Добавить</Button>
+                <Button variant='outline-success' onClick={() => addBrand()}>Добавить</Button>
             </Modal.Footer>
         </Modal>
     )

@@ -1,5 +1,5 @@
 
-import { Brand, Type, TypeDevice } from "../types/types";
+import { Brand, Type } from "../types/types";
 import { $host, $authHost } from "./index";
 
 export const createType = async (type:Type) =>{
@@ -13,7 +13,7 @@ export const fetchTypes = async () =>{
 }
 
 export const createBrand = async (brand:Brand) =>{
-    const {data} = await $authHost.post('api/type',brand)
+    const {data} = await $authHost.post('api/brand',brand)
     return data
 }
 
@@ -22,7 +22,7 @@ export const fetchBrand = async () =>{
     return data
 }
 
-export const createDevice = async (device:TypeDevice) =>{
+export const createDevice = async (device:{}) =>{
     const {data} = await $authHost.post('api/device',device)
     return data
 }
