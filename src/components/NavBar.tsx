@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 const NavBar: FC = observer(
     () => {
         const { user } = useContext(Context)
-        console.log("🚀 ~ user:", user)
         const navigate = useNavigate()
 
         const logOut = () => {
