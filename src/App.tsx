@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from './index';
 import { check } from './http/userApi';
 import { Spinner } from 'react-bootstrap';
+import BpmnEditor from './components/Bpmn';
 
 const App: FC = observer(() => {
   const { user } = useContext(Context)
@@ -23,6 +24,7 @@ const App: FC = observer(() => {
 
   return (
     <BrowserRouter>
+    <BpmnEditor/>
       <NavBar />
       <AppRouter />
     </BrowserRouter>
