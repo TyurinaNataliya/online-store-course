@@ -137,7 +137,11 @@ const BpmnEditor: FC = observer(() => {
         xml = result.xml;
       }
     });
-    createDiagramm({ model: xml }).then((data) => {});
+    createDiagramm({
+      model: xml,
+      // name: добавлять имя из диалога
+      // как сделаешь в таблицу выводить Имя
+    }).then((data) => {});
   }, [bpmn]);
 
   const getModelById = useCallback(async (id: number) => {
