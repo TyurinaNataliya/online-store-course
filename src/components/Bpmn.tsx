@@ -170,7 +170,7 @@ const BpmnEditor: FC = observer(() => {
               style={{ margin: 5 }}
               onClick={() => navigate(ADMIN_ROUTE)}
             >
-              Админ панель
+              Admin
             </Button>
             <Button
               variant="contained"
@@ -178,7 +178,7 @@ const BpmnEditor: FC = observer(() => {
               style={{ margin: 5 }}
               onClick={() => logOut()}
             >
-              Выйти
+              Exit
             </Button>
           </>
         ) : (
@@ -188,14 +188,14 @@ const BpmnEditor: FC = observer(() => {
             style={{ margin: 5 }}
             onClick={() => navigate(LOGIN_ROUTE)}
           >
-            Авторизация
+            Authorization
           </Button>
         )}
       </div>
       <Button variant="contained" style={{ margin: 20 }}>
         <label htmlFor="file">
           <FolderOpenIcon />
-          Открыть файл
+          Open
         </label>
       </Button>
       <input
@@ -205,15 +205,15 @@ const BpmnEditor: FC = observer(() => {
         onChange={handleFileInputChange}
       />
       <Button variant="contained" style={{ margin: 5 }} onClick={saveBpmn}>
-        <SaveAltIcon /> Сохранить
+        <SaveAltIcon /> Save
       </Button>
       <Button variant="contained" style={{ margin: 5 }} onClick={addModelToDb}>
         <StorageIcon />
-        Сохранить в базу
+        Save to DB
       </Button>
       <Button variant="contained" style={{ margin: 20 }} onClick={saveSvg}>
         <ImageIcon />
-        Сохранить SVG
+        Save svg
       </Button>
       <Button
         variant="outlined"
@@ -224,7 +224,7 @@ const BpmnEditor: FC = observer(() => {
         }}
       >
         <DeleteOutlineIcon />
-        Очистить
+        Clear
       </Button>
       <div
         style={{
