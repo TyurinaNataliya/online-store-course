@@ -65,6 +65,9 @@ const BpmnEditor: FC = observer(() => {
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
       ],
+      // moddleExtensions: {
+      //   magic: MagicModdleDescriptor,
+      // },
     });
 
     // Load BPMN XML or create a new diagram
