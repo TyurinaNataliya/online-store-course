@@ -18,7 +18,6 @@ import "bpmn-js-color-picker/colors/color-picker.css";
 import "@bpmn-io/properties-panel/assets/properties-panel.css";
 import { createDiagramm, fetchDiagramm } from "../http/diagrammApi";
 import DataTables from "../pages/DataTables";
-import Container from "react-bootstrap/Container";
 import { ADMIN_ROUTE, LOGIN_ROUTE } from "../utils/constr";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../index";
@@ -27,6 +26,11 @@ import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
 } from "bpmn-js-properties-panel";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import StorageIcon from "@mui/icons-material/Storage";
+import ImageIcon from "@mui/icons-material/Image";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const BpmnEditor: FC = observer(() => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,14 +38,10 @@ const BpmnEditor: FC = observer(() => {
   // const { diagramm } = useContext(Context);
 
   const [bpmnDiagram, setDiagramBpmn] = useState("");
-  const { diagramm } = useContext(Context);
-  console.log("🚀 ~ constBpmnEditor:FC=observer ~ diagram:", diagramm);
 
   const { user } = useContext(Context);
-  console.log("🚀 ~ constBpmnEditor:FC=observer ~ user:", user);
   const navigate = useNavigate();
   const logOut = () => {
-    console.log("🚀 ~ logOut ~ logOut:", logOut);
     user.setUser({});
     user.setIsAuth(false);
   };
@@ -133,52 +133,59 @@ const BpmnEditor: FC = observer(() => {
         xml = result.xml;
       }
     });
-    createDiagramm({ model: xml }).then((data) => {
-      console.log("🚀 ~ addModelToDb ~ data:", data);
-    });
+    createDiagramm({ model: xml }).then((data) => {});
   }, [bpmn]);
 
   const getModelById = useCallback(async (id: number) => {
     await fetchDiagramm(id).then((data) => {
       setDiagramBpmn(data.model);
-      console.log("🚀 ~ fetchDiagramm ~ data:", data);
     });
   }, []);
 
   return (
     <>
-      <Container>
-        <div>
-          {user.isAuth ? (
-            <>
-              <Button
-                variant="outlined"
-                style={{ margin: 5 }}
-                onClick={() => navigate(ADMIN_ROUTE)}
-              >
-                Админ панель
-              </Button>
-              <Button
-                variant="outlined"
-                style={{ margin: 5 }}
-                onClick={() => logOut()}
-              >
-                Выйти
-              </Button>
-            </>
-          ) : (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          background: "grey",
+        }}
+      >
+        {user.isAuth ? (
+          <>
             <Button
-              variant="outlined"
+              variant="contained"
+              color="secondary"
               style={{ margin: 5 }}
-              onClick={() => navigate(LOGIN_ROUTE)}
+              onClick={() => navigate(ADMIN_ROUTE)}
             >
-              Авторизация
+              Админ панель
             </Button>
-          )}
-        </div>
-      </Container>
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ margin: 5 }}
+              onClick={() => logOut()}
+            >
+              Выйти
+            </Button>
+          </>
+        ) : (
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ margin: 5 }}
+            onClick={() => navigate(LOGIN_ROUTE)}
+          >
+            Авторизация
+          </Button>
+        )}
+      </div>
       <Button variant="contained" style={{ margin: 20 }}>
-        <label htmlFor="file">Открыть файл</label>
+        <label htmlFor="file">
+          <FolderOpenIcon />
+          Открыть файл
+        </label>
       </Button>
       <input
         id="file"
@@ -187,30 +194,15 @@ const BpmnEditor: FC = observer(() => {
         onChange={handleFileInputChange}
       />
       <Button variant="contained" style={{ margin: 5 }} onClick={saveBpmn}>
-        Сохранить BPMN
-      </Button>{" "}
+        <SaveAltIcon /> Сохранить
+      </Button>
       <Button variant="contained" style={{ margin: 5 }} onClick={addModelToDb}>
-        Сохранить BPMN в базу
+        <StorageIcon />
+        Сохранить в базу
       </Button>
       <Button variant="contained" style={{ margin: 20 }} onClick={saveSvg}>
+        <ImageIcon />
         Сохранить SVG
-      </Button>
-      Запросы
-      <Button
-        variant="contained"
-        color="secondary"
-        style={{ margin: 5 }}
-        onClick={() => getModelById(3)}
-      >
-        1
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        style={{ margin: 20 }}
-        onClick={() => getModelById(2)}
-      >
-        2
       </Button>
       <Button
         variant="outlined"
@@ -220,6 +212,7 @@ const BpmnEditor: FC = observer(() => {
           // setDiagramBpmn("");
         }}
       >
+        <DeleteOutlineIcon />
         Очистить
       </Button>
       <div

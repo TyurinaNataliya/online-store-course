@@ -1,5 +1,4 @@
-export const INITIAL_XML
- = `<?xml version="1.0" encoding="UTF-8"?>
+export const INITIAL_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions >
   <bpmn:process id="Process" isExecutable="true">
   </bpmn:process>
