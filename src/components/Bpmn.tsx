@@ -15,6 +15,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import { INITIAL_XML } from "../const";
 import "bpmn-js-color-picker/colors/color-picker.css";
+import "diagram-js-minimap/assets/diagram-js-minimap.css";
 import "@bpmn-io/properties-panel/assets/properties-panel.css";
 import { createDiagramm, fetchDiagramm } from "../http/diagrammApi";
 import DataTables from "../pages/DataTables";
@@ -26,6 +27,7 @@ import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
 } from "bpmn-js-properties-panel";
+import minimapModule from "diagram-js-minimap";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import StorageIcon from "@mui/icons-material/Storage";
 import ImageIcon from "@mui/icons-material/Image";
@@ -65,6 +67,7 @@ const BpmnEditor: FC = observer(() => {
         BpmnColorPickerModule,
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
+        minimapModule,
       ],
       // moddleExtensions: {
       //   magic: MagicModdleDescriptor,
