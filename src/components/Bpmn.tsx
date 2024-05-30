@@ -176,7 +176,7 @@ const BpmnEditor: FC = observer(() => {
           </>
         ) : (
           <Button
-            variant="outlined"
+            variant="contained"
             color="secondary"
             style={{ margin: 5 }}
             onClick={() => navigate(LOGIN_ROUTE)}
