@@ -21,7 +21,7 @@ const NavBar: FC = observer(() => {
     <Navbar className="bg-body-tertiary mb-3" bg="dark" data-bs-theme="dark">
       <Container>
         <Navbar.Brand href={SHOP_ROUTE}></Navbar.Brand>
-
+        Bpm sample
         {user.isAuth ? (
           <Nav className="ml-auto">
             <Button

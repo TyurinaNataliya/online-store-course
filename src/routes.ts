@@ -2,7 +2,6 @@ import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";
 import DevicePage from "./pages/DevicePage";
-import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
@@ -13,6 +12,7 @@ import {
   SHOP_ROUTE,
 } from "./utils/constr";
 import DataTables from "./pages/DataTables";
+import BpmnEditor from "./components/Bpmn";
 
 export const authRoutes = [
   {
@@ -28,7 +28,7 @@ export const authRoutes = [
 export const publicRoutes = [
   {
     path: SHOP_ROUTE,
-    Component: Shop,
+    Component: BpmnEditor,
   },
   {
     path: LOGIN_ROUTE,

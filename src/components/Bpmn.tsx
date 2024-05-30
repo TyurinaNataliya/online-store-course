@@ -44,6 +44,7 @@ const BpmnEditor: FC = observer(() => {
   const logOut = () => {
     user.setUser({});
     user.setIsAuth(false);
+    navigate(LOGIN_ROUTE);
   };
 
   // создаем фиктивный моделлер
