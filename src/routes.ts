@@ -1,4 +1,3 @@
-import { Component } from "react";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";

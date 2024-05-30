@@ -1,5 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-font/dist/css/bpmn-embedded.css";
@@ -8,17 +15,36 @@ import React from "react";
 import { Button } from "@mui/material";
 import { INITIAL_XML } from "../const";
 import "bpmn-js-color-picker/colors/color-picker.css";
+import "@bpmn-io/properties-panel/assets/properties-panel.css";
 import { createDiagramm, fetchDiagramm } from "../http/diagrammApi";
 import DataTables from "../pages/DataTables";
-// import {BpmnPropertiesPanelModule} from "bpmn-js-properties-panel";
-// import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
+import Container from "react-bootstrap/Container";
+import { ADMIN_ROUTE, LOGIN_ROUTE } from "../utils/constr";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../index";
+import { observer } from "mobx-react-lite";
+import {
+  BpmnPropertiesPanelModule,
+  BpmnPropertiesProviderModule,
+} from "bpmn-js-properties-panel";
 
-const BpmnEditor: FC = () => {
+const BpmnEditor: FC = observer(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   // подтягивать схему из глобального хранилища
   // const { diagramm } = useContext(Context);
 
   const [bpmnDiagram, setDiagramBpmn] = useState("");
+  const { diagramm } = useContext(Context);
+  console.log("🚀 ~ constBpmnEditor:FC=observer ~ diagram:", diagramm);
+
+  const { user } = useContext(Context);
+  console.log("🚀 ~ constBpmnEditor:FC=observer ~ user:", user);
+  const navigate = useNavigate();
+  const logOut = () => {
+    console.log("🚀 ~ logOut ~ logOut:", logOut);
+    user.setUser({});
+    user.setIsAuth(false);
+  };
 
   // создаем фиктивный моделлер
   const [bpmn, setBpmn] = useState<BpmnModeler>(() => new BpmnModeler());
@@ -32,9 +58,13 @@ const BpmnEditor: FC = () => {
     const bpmnModeler = new BpmnModeler({
       container: container,
       propertiesPanel: {
-        parent: "#properties-panel",
+        parent: "#properties",
       },
-      additionalModules: [BpmnColorPickerModule],
+      additionalModules: [
+        BpmnColorPickerModule,
+        BpmnPropertiesPanelModule,
+        BpmnPropertiesProviderModule,
+      ],
     });
 
     // Load BPMN XML or create a new diagram
@@ -98,7 +128,7 @@ const BpmnEditor: FC = () => {
 
   const addModelToDb = useCallback(async () => {
     let xml = "";
-    await bpmn.saveXML({ format: true }).then((result) => {
+    await bpmn.saveXML({ format: false }).then((result) => {
       if (result.xml) {
         xml = result.xml;
       }
@@ -117,11 +147,36 @@ const BpmnEditor: FC = () => {
 
   return (
     <>
-      <div
-        ref={containerRef}
-        style={{ width: "100%", height: 800 }}
-        className="bpmn-editor"
-      />
+      <Container>
+        <div>
+          {user.isAuth ? (
+            <>
+              <Button
+                variant="outlined"
+                style={{ margin: 5 }}
+                onClick={() => navigate(ADMIN_ROUTE)}
+              >
+                Админ панель
+              </Button>
+              <Button
+                variant="outlined"
+                style={{ margin: 5 }}
+                onClick={() => logOut()}
+              >
+                Выйти
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="outlined"
+              style={{ margin: 5 }}
+              onClick={() => navigate(LOGIN_ROUTE)}
+            >
+              Авторизация
+            </Button>
+          )}
+        </div>
+      </Container>
       <Button variant="contained" style={{ margin: 20 }}>
         <label htmlFor="file">Открыть файл</label>
       </Button>
@@ -167,9 +222,24 @@ const BpmnEditor: FC = () => {
       >
         Очистить
       </Button>
-      <DataTables setId={(model) => setDiagramBpmn(model)} />
+      <div
+        style={{
+          width: "100%",
+          height: 800,
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <div
+          style={{ width: "100%", height: 800, display: "flex" }}
+          ref={containerRef}
+          className="bpmn-editor"
+        />
+        <div id="properties" />
+      </div>
+      <DataTables getModelById={getModelById} />
     </>
   );
-};
+});
 
 export default BpmnEditor;

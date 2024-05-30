@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import UserStore from "./store/UserStore";
 import DeviceStore from "./store/DeviceStore";
+import DiagrammStore from "./store/DiagrammStore";
 
 interface AppContextData {
   user: Record<string, any>;
@@ -21,7 +22,7 @@ ReactDOM.render(
     value={{
       user: new UserStore(),
       device: new DeviceStore(),
-      diagramm: new DeviceStore(),
+      diagramm: new DiagrammStore(),
     }}
   >
     <App />

@@ -10,12 +10,11 @@ import { observer } from "mobx-react-lite";
 import { FC, useContext, useEffect, useState } from "react";
 import { Context } from "../index";
 import { fetchDiagramms } from "../http/diagrammApi";
-
 type Props = {
-  setId?: (model: string) => void;
+  getModelById?: (id: number) => void;
 };
 
-const DataTables: FC<Props> = observer(({ setId }) => {
+const DataTables: FC<Props> = observer(({ getModelById }) => {
   const { diagramm } = useContext(Context);
   const [dbDiagrams, setDbDiagrams] = useState<any[]>([]);
   useEffect(() => {
@@ -30,8 +29,8 @@ const DataTables: FC<Props> = observer(({ setId }) => {
         <TableHead>
           <TableRow>
             <TableCell>id</TableCell>
-            <TableCell>model</TableCell>
-            <TableCell> </TableCell>
+            <TableCell>Дата Создания</TableCell>
+            <TableCell>++++</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,13 +45,13 @@ const DataTables: FC<Props> = observer(({ setId }) => {
               }
             >
               <TableCell>{row.id}</TableCell>
-              <TableCell>{row.model}</TableCell>
+              <TableCell>{new Date(row.createdAt).toISOString()}</TableCell>
               <TableCell>
                 <Button
                   size="small"
                   color="primary"
                   onClick={() => {
-                    setId?.(row.model);
+                    getModelById?.(row.id);
                   }}
                 >
                   Отобразить на дигарамме
