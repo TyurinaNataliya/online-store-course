@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
 export default class DiagrammStore {
-  private _diagramms: { id: number; model: string }[];
+  private _diagramms: { id: number; model: string; name: string }[];
 
   constructor() {
     this._diagramms = [];

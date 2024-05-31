@@ -29,7 +29,7 @@ const DataTables: FC<Props> = observer(({ getModelById }) => {
         <TableHead>
           <TableRow>
             <TableCell>id</TableCell>
-            {/* <TableCell>Наименование</TableCell> */}
+            <TableCell>Наименование</TableCell>
             <TableCell>Дата Создания</TableCell>
             <TableCell>++++</TableCell>
           </TableRow>
@@ -46,8 +46,8 @@ const DataTables: FC<Props> = observer(({ getModelById }) => {
               }
             >
               <TableCell>{row.id}</TableCell>
-              {/* <TableCell>{row.name}</TableCell> */}
-              <TableCell>{new Date(row.createdAt).toISOString()}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{new Date(row.createdAt).toLocaleString()}</TableCell>
               <TableCell>
                 <Button
                   size="small"

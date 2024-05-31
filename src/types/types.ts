@@ -17,6 +17,7 @@ export type Type = {
 export type Diagramm = {
   id?: number;
   model: string;
+  name: string;
 };
 
 export type Brand = {

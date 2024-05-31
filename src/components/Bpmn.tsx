@@ -12,7 +12,14 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-font/dist/css/bpmn-embedded.css";
 import BpmnColorPickerModule from "bpmn-js-color-picker/colors";
 import React from "react";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  TextField,
+} from "@mui/material";
 import { INITIAL_XML } from "../const";
 import "bpmn-js-color-picker/colors/color-picker.css";
 import "diagram-js-minimap/assets/diagram-js-minimap.css";
@@ -49,8 +56,21 @@ const BpmnEditor: FC = observer(() => {
     navigate(LOGIN_ROUTE);
   };
 
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // создаем фиктивный моделлер
   const [bpmn, setBpmn] = useState<BpmnModeler>(() => new BpmnModeler());
+  const [newName, setNewName] = useState<string>("");
+  const hendleUpdateName = (event: any) => {
+    setNewName(event.target.value);
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -142,10 +162,10 @@ const BpmnEditor: FC = observer(() => {
     });
     createDiagramm({
       model: xml,
-      // name: добавлять имя из диалога
+      name: newName,
       // как сделаешь в таблицу выводить Имя
     }).then((data) => {});
-  }, [bpmn]);
+  }, [bpmn, newName]);
 
   const getModelById = useCallback(async (id: number) => {
     await fetchDiagramm(id).then((data) => {
@@ -207,10 +227,51 @@ const BpmnEditor: FC = observer(() => {
       <Button variant="contained" style={{ margin: 5 }} onClick={saveBpmn}>
         <SaveAltIcon /> Save
       </Button>
-      <Button variant="contained" style={{ margin: 5 }} onClick={addModelToDb}>
+      <Button
+        variant="contained"
+        style={{ margin: 5 }}
+        onClick={handleClickOpen}
+      >
         <StorageIcon />
         Save to DB
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries((formData as any).entries());
+            const email = formJson.email;
+            console.log(email);
+            handleClose();
+          },
+        }}
+      >
+        <DialogContent>
+          <DialogContentText>Save file name</DialogContentText>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="name"
+            type="string"
+            fullWidth
+            variant="standard"
+            value={newName}
+            onChange={hendleUpdateName}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={addModelToDb} type="submit">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Button variant="contained" style={{ margin: 20 }} onClick={saveSvg}>
         <ImageIcon />
         Save svg
@@ -220,7 +281,6 @@ const BpmnEditor: FC = observer(() => {
         style={{ margin: 5 }}
         onClick={() => {
           bpmn.importXML(INITIAL_XML);
-          // setDiagramBpmn("");
         }}
       >
         <DeleteOutlineIcon />
